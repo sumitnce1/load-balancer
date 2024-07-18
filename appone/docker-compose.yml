@@ -1,0 +1,23 @@
+version: "3.4"
+
+services:
+  apponeb:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      HOST: ${HOST}
+      PORT: ${PORT}
+    container_name: appone-backend
+    ports:
+      - "8000:8000"
+
+  apponef:
+    build:
+      context: ./frontend/appone
+      dockerfile: Dockerfile
+      args:
+        API_HOST: "http://${HOST}:8000"
+    ports:
+      - "80:3000"
+    container_name: appone-frontend
