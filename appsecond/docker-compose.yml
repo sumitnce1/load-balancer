@@ -1,0 +1,23 @@
+version: "3.4"
+
+services:
+  appsecondb:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      HOST: ${HOST}
+      PORT: ${PORT}
+    container_name: appsecond-backend
+    ports:
+      - "9000:9000"
+
+  appsecondf:
+    build:
+      context: ./frontend/appsecond
+      dockerfile: Dockerfile
+      args:
+        API_HOST: "http://${HOST}:9000"
+    ports:
+      - "80:3000"
+    container_name: appsecond-frontend
